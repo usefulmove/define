@@ -1,6 +1,6 @@
 [project]
 name = "define"
-version = "0.1.0"
+version = "0.2.0"
 description = "dictionary look up"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -10,7 +10,11 @@ dependencies = [
 ]
 
 [project.scripts]
-define = "main:main"
+define = "define:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.uv]
 package = true

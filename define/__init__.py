@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-import sys
+import json
 import requests
 from rich.console import Console
+import sys
 
 
 console = Console()
@@ -19,7 +20,7 @@ def main():
         console.print("[red]error[/]: api request failed")
         return
 
-    data = eval(response.text)[0]
+    data = json.loads(response.text)[0]
 
     word = data["word"]
     meanings = data["meanings"]
