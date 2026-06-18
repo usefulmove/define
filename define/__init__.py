@@ -1,26 +1,33 @@
 #!/usr/bin/env python
-import json
+
 import requests
 from rich.console import Console
+from rich.markup import escape
 import sys
 
 
+URI_BASE = "https://api.dictionaryapi.dev/api/v2/entries/en/"
 console = Console()
 
 
 def main():
     if len(sys.argv) < 2:
         console.print("[red]error[/]: no word argument provided")
-        return
+        sys.exit(1)
 
-    uri = f"https://api.dictionaryapi.dev/api/v2/entries/en/{sys.argv[1]}"
-    response = requests.get(uri)
+    uri = URI_BASE + " ".join(sys.argv[1:])
+
+    try:
+        response = requests.get(uri, timeout=10)
+    except requests.RequestException:
+        console.print("[red]error[/]: could not reach dictionary API")
+        sys.exit(1)
 
     if response.status_code != 200:
-        console.print("[red]error[/]: api request failed")
-        return
+        console.print("[red]error[/]: word not found")
+        sys.exit(1)
 
-    data = json.loads(response.text)[0]
+    data = response.json()[0]
 
     word = data["word"]
     meanings = data["meanings"]
@@ -34,9 +41,9 @@ def main():
         console.print(f"  [yellow]{part_of_speech}:[/]")
 
         for n, definition in enumerate(definitions, 1):
-            console.print(f"    [gray]{n}[/]. {definition['definition']}")
+            console.print(f"    [gray]{n}[/]. {escape(definition['definition'])}")
 
-    print()
+    console.print()
 
 
 if __name__ == "__main__":
