@@ -10,9 +10,35 @@ It queries the free [Free Dictionary API](https://dictionaryapi.dev/) and prints
 
 ## Installation
 
-### With `uv` (recommended)
+### With `pipx` from GitHub
 
-Install it as a global CLI tool:
+Install directly from the GitHub repository without cloning:
+
+```bash
+pipx install git+https://github.com/usefulmove/define.git
+```
+
+This builds the package, exposes the `define` command on your `PATH`, and lets you run it from anywhere:
+
+```bash
+define hello
+```
+
+To upgrade after a new release:
+
+```bash
+pipx upgrade define
+```
+
+To uninstall:
+
+```bash
+pipx uninstall define
+```
+
+### With `uv` for local development
+
+Install it as a global CLI tool from the project directory:
 
 ```bash
 uv tool install .
@@ -44,8 +70,6 @@ Run it directly from the project directory without installing anything:
 
 ```bash
 uv run define hello
-# or
-uv run python main.py hello
 ```
 
 ### With `pip`
