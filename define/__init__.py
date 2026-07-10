@@ -27,21 +27,22 @@ def main():
         console.print("[red]error[/]: word not found")
         sys.exit(1)
 
-    data = response.json()[0]
+    for idx, entry in enumerate(response.json()):
+        data = entry
 
-    word = data["word"]
-    meanings = data["meanings"]
+        word = data["word"]
+        meanings = data["meanings"]
 
-    console.print(f"\n[blue bold underline]{word}[/]")
+        console.print(f"\n[#87ffaf bold]{word}[/] [#666666][{idx+1}][/]")
 
-    for meaning in meanings:
-        part_of_speech = meaning["partOfSpeech"]
-        definitions = meaning["definitions"]
+        for meaning in meanings:
+            part_of_speech = meaning["partOfSpeech"]
+            definitions = meaning["definitions"]
 
-        console.print(f"  [yellow]{part_of_speech}:[/]")
+            console.print(f"  [#fffc67]{part_of_speech}:[/]")
 
-        for n, definition in enumerate(definitions, 1):
-            console.print(f"    [gray]{n}[/]. {escape(definition['definition'])}")
+            for n, definition in enumerate(definitions, 1):
+                console.print(f"    [#0080ff bold]{n}[/]. {escape(definition['definition'])}")
 
     console.print()
 
